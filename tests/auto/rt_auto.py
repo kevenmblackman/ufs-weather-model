@@ -201,11 +201,13 @@ class Job:
 
     def job_failed(self, logger, job_name, exception=Exception, STDOUT=False,
                    out=None, err=None):
-        logger.critical(f'{job_name} FAILED. Exception:{exception}')
 
         if STDOUT:
+            logger.critical(f'{job_name} FAILED. Exception:{exception}')
             logger.critical(f'STDOUT: {[item for item in out if not None]}')
             logger.critical(f'STDERR: {[eitem for eitem in err if not None]}')
+        else:    
+            logger.critical(f'{job_name} FAILED. Exception:{exception}')
 
 def setup_env():
     hostname = os.getenv('HOSTNAME')
