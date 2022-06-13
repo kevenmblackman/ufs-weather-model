@@ -75,29 +75,6 @@ def create_bl_dir(bldir, job_obj):
             raise FileNotFoundError
 
 
-#def get_bl_date(job_obj):
-#    logger = logging.getLogger('BL/GET_BL_DATE')
-#    for line in job_obj.preq_dict['preq'].body.splitlines():
-#        if 'BL_DATE:' in line:
-#            bldate = line
-#            bldate = bldate.replace('BL_DATE:', '')
-#            bldate = bldate.replace(' ', '')
-#            if len(bldate) != 8:
-#                print(f'Date: {bldate} is not formatted YYYYMMDD')
-#                raise ValueError
-#            logger.info(f'BL_DATE: {bldate}')
-#            bl_format = '%Y%m%d'
-#            try:
-#                datetime.datetime.strptime(bldate, bl_format)
-#            except ValueError:
-#                logger.info(f'Date {bldate} is not formatted YYYYMMDD')
-#                raise ValueError
-#            return bldate
-#    logger.critical('"BL_DATE:YYYYMMDD" needs to be in the PR body.'\
-#                    'On its own line. Stopping')
-#    raise ValueError
-
-
 def run_regression_test(job_obj, pr_repo_loc):
     logger = logging.getLogger('BL/RUN_REGRESSION_TEST')
     if job_obj.compiler == 'gnu':
