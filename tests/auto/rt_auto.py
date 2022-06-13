@@ -88,7 +88,6 @@ def get_preqs_with_actions(repos, machine, ghinterface_obj, actions):
                    for label in pr.get_labels()]
 
     jobs = []
-    # return_preq = []
     for pr_label in preq_labels:
         compiler, match = set_action_from_label(machine, actions,
                                                 pr_label['label'])
