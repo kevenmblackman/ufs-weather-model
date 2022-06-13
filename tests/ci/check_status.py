@@ -7,7 +7,7 @@ import time
 from urllib.request import urlopen, Request
 from datetime import datetime, timedelta
 
-
+not_found = "not found"
 def check_build(request):
     """Check if all build jobs are completed successfully.
     API endpoint: api.github.com/repos/{owner}/{repo}/actions/runs/{run_id}/jobs
@@ -37,8 +37,8 @@ def check_completion(request, job_name):
         response = urlopen(request)
         data = json.loads(response.read().decode())["jobs"]
         cid = next((x["id"]
-                   for x in data if x["name"] == job_name), "not found")
-        if cid == "not found":
+                   for x in data if x["name"] == job_name), not_found)
+        if cid == not_found:
             continue
         completed = next(
             x["status"] == "completed" for x in data if x["id"] == cid)
@@ -88,10 +88,10 @@ def check_ec2(url, request, myid):
         for cid in reversed(in_progress):
             data = json.loads(urlopen(workflows[cid]).read().decode())["jobs"]
             start_status = next(
-                (x["status"] for x in data if x["name"] == "Start runners"), "not found")
+                (x["status"] for x in data if x["name"] == "Start runners"), not_found)
             stop_status = next(
-                (x["status"] for x in data if x["name"] == "Stop runners"), "not found")
-            if start_status == "not found" or stop_status == "not found":
+                (x["status"] for x in data if x["name"] == "Stop runners"), not_found)
+            if start_status == not_found or stop_status == not_found:
                 break
             if start_status == "completed" and stop_status == "completed":
                 done.append(cid)
